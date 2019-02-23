@@ -1,0 +1,59 @@
+public class Smileys {
+
+    public static void main(String[] args) {
+        // Test your method at least with the following
+        printWithSmileys("Interface");
+        printWithSmileys("Beerbottle");
+        printWithSmileys("Interface");
+    }
+    
+    private static void printWithSmileys(String characterString) {
+        printSmileyLineBreak(howManySmileys(characterString));        
+        printSmiley(1);
+        System.out.print(" " + correctOdd(characterString) + " ");
+        printSmileyLineBreak(1);        
+        printSmileyLineBreak(howManySmileys(characterString));
+    }
+    
+    private static int howManySmileys(String string) {
+        if (oddNumOfChars(string)) {
+            return (string.length() + 7)/2;
+        } else {
+            return (string.length() + 6)/2;
+        }
+    }
+    
+    private static boolean oddNumOfChars(String string) {
+        if (string.length()%2==0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    private static void printSmiley(int amount) {
+        int i = 0;
+        while (i<amount) {
+            System.out.print(":)");
+            i++;
+        }        
+    }
+    
+    private static String correctOdd(String string) {
+        if (oddNumOfChars(string)) {
+            return string + " ";
+        } else {
+            return string;
+        }
+    }
+    
+    private static void printSmileyLineBreak(int amount) {
+        int i = 0;
+        while (i<amount) {
+            System.out.print(":)");
+            i++;
+        }
+        System.out.println();
+    }
+
+}

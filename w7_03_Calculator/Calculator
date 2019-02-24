@@ -1,0 +1,59 @@
+
+public class Calculator {
+    private Reader input = new Reader();
+    private int count;
+    
+    public void Calculator() {
+        this.count = 0;
+    }
+    
+    public void start() {
+        while (true) {
+            System.out.print("command: ");
+            String command = input.readString();
+            if (command.equals("end")) {
+                break;
+            }
+            if (command.equals("sum")) {
+                sum();
+            } else if (command.equals("difference")) {
+                difference();
+            } else if (command.equals("product")) {
+                product();
+            }
+        }
+
+        statistics();
+    }
+    
+    private void sum() {
+        int[] numbers = valueFinder();
+        System.out.println("sum of the values " + (numbers[0] + numbers[1]));
+    }
+    
+    private void product() {
+        int[] numbers = valueFinder();         
+        System.out.println("product of the values " + (numbers[0] * numbers[1]));
+    }
+    
+    private void difference() {
+        int[] numbers = valueFinder();               
+        System.out.println("difference of the values " + (numbers[0]-numbers[1]));
+    }
+    
+    private int[] valueFinder() {
+        int[] values = new int[2];
+        System.out.print("value1: ");
+        values[0] = input.readInteger();
+        System.out.print("value2: ");
+        values[1] = input.readInteger();
+        
+        this.count++;
+        return values;
+    }
+    
+    private void statistics() {
+        System.out.println("Calculations done " + this.count);
+    }
+    
+}

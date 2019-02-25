@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+
+public class Suitcase {
+    private ArrayList<Thing> things;
+    private int limit;    
+    
+    public Suitcase(int limit) {
+        this.limit = limit;
+        this.things = new ArrayList<Thing>();
+    }
+    
+    public void addThing(Thing thing) {
+        if (this.totalWeight() + thing.getWeight() <= this.limit) {
+            this.things.add(thing);
+        } else {
+            
+        }
+    }
+    
+    public String toString() {
+        if (this.things.size() == 0) {
+            return "empty (0 kg)";
+        } else if (this.things.size() == 1) {
+            return this.things.size() + " thing (" + this.totalWeight() + " kg)";
+        } else {
+            return this.things.size() + " things (" + this.totalWeight() + " kg)";
+        }        
+    }
+    
+    public void printThings() {
+        for (Thing things : this.things) {
+            System.out.println(things.toString());
+        }
+    }
+    
+    public int totalWeight() {
+        int weight = 0;
+        for (Thing things :  this.things) {
+            weight += things.getWeight();
+        }
+        return weight;
+    }
+    
+    public Thing heaviestThing() {
+        Thing heaviest = new Thing("heavy", 0);
+        for (Thing thing : this.things) {
+            if (thing.getWeight() > heaviest.getWeight()) {
+                heaviest = thing;
+            }
+        } if (heaviest.getWeight() > 0) {
+            return heaviest;
+        } else {
+           return null; 
+        }
+    }
+}

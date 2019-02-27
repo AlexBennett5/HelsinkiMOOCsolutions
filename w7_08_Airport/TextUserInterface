@@ -1,0 +1,72 @@
+import java.util.Scanner;
+
+public class TextUserInterface {
+    private Scanner reader;
+    private Catalogue catalogue;
+    
+    public TextUserInterface(Scanner reader, Catalogue catalogue) {
+        this.reader = reader;
+        this.catalogue = catalogue;
+    }
+    
+    public void start() {
+        System.out.println("Airport panel\n" + "--------------------");
+        String input = "";
+        
+        while (!(input.equals("x"))) {
+            System.out.println("Choose operation:\n" + 
+                                "[1] Add airplane\n" + 
+                                "[2] Add flight\n" + 
+                                "[x] Exit\n" +
+                                "> ");
+            
+            input = this.reader.nextLine();
+            
+            if (input.equals("1")) {
+                System.out.println("Give plane ID: ");
+                String input1 = this.reader.nextLine();
+                System.out.println("Give plane capacity: ");
+                int input2 = Integer.parseInt(this.reader.nextLine());
+                this.catalogue.addPlane(input1, input2);
+            } else if (input.equals("2")) {
+                System.out.println("Give plane ID: ");
+                String plane = this.reader.nextLine();
+                System.out.println("Give departure airport code: ");
+                String from = this.reader.nextLine();
+                System.out.println("Give destination airport code: ");
+                String to = this.reader.nextLine();
+                this.catalogue.addFlight(from, to);
+                this.catalogue.connectFlight(plane, from);
+
+
+            }
+        }
+        
+        System.out.println("Flight service\n" + "------------");
+        input = "";
+        
+        while (!(input.equals("x"))) {
+            System.out.println("Choose operation:\n" +
+                                "[1] Print planes\n" +
+                                "[2] Print flights\n" +
+                                "[3] Print plane info\n" +
+                                "[x] Quit\n" +
+                                "> ");
+            
+            input = this.reader.nextLine();
+            
+            if (input.equals("1")) {
+                this.catalogue.printPlanes();
+            } else if (input.equals("2")) {
+                this.catalogue.printFlights();
+            } else if (input.equals("3")) {
+                System.out.println("Give plane ID: ");
+                String plane = this.reader.nextLine();
+                System.out.println(this.catalogue.getSinglePlane(plane));
+            }
+            
+        }
+        
+    }
+
+}

@@ -1,0 +1,67 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+
+public class Catalogue {
+    private HashMap<String, Integer> planes;
+    private HashMap<String, String> flights;
+    private ArrayList<String> connections;
+    
+    
+    public Catalogue() {
+        this.planes = new HashMap<String, Integer>();
+        this.flights = new HashMap<String, String>();
+        this.connections = new ArrayList<String>();
+    }
+    
+    public void addPlane(String id, int capacity) {
+        this.planes.put(id, capacity);
+    }
+    
+    public void addFlight(String from, String to) {
+        this.flights.put(from, to);
+    }
+    
+    public String getSinglePlane(String name) {
+        for (String key : this.planes.keySet()) {
+            if (key.equals(name)) {
+                return key + " (" + this.planes.get(key) + " ppl) ";
+            }
+        }
+        return null;
+    }
+    
+    public String getSingleFlight(String from) {
+        for (String key : this.flights.keySet()) {
+            if (key.equals(from)) {
+                return "(" + from + "-" + this.flights.get(from) + ")";
+            }
+        }
+        return null;
+    }
+    
+    public void printPlanes() {
+        for (String key : this.planes.keySet()) {
+            System.out.println(key + " (" + this.planes.get(key) + " ppl)");
+        }
+    }
+    
+    
+    
+    public void connectFlight(String airplane, String from) {
+        String result = "";
+            if (getSinglePlane(airplane) != null && getSingleFlight(from) != null) {
+                result += getSinglePlane(airplane) + getSingleFlight(from);
+            }            
+            if (!(result.equals(""))) {
+            this.connections.add(result);
+        }                
+    }
+    
+    public void printFlights() {
+        for (String flights : this.connections) {
+            System.out.println(flights);
+        }
+    }
+    
+}

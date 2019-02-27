@@ -1,0 +1,11 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner reader = new Scanner(System.in);
+        Catalogue catalogue = new Catalogue();
+        
+        TextUserInterface ui = new TextUserInterface(reader, catalogue);
+        ui.start();
+    }
+}

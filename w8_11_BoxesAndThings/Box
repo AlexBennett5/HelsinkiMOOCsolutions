@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+
+public class Box implements ToBeStored {
+    private double limit;
+    private ArrayList<ToBeStored> stuff;
+    
+    public Box(double limit) {
+        this.limit = limit;
+        this.stuff = new ArrayList<ToBeStored>();
+        
+    }
+    
+    public void add(ToBeStored tobestored) {
+        if (this.weight() + tobestored.weight() <= this.limit) {
+            this.stuff.add(tobestored);
+        }
+    }
+    
+    public double weight() {
+        double weight = 0;
+        for (ToBeStored stuff : this.stuff) {
+            weight += stuff.weight();
+        }
+        return weight;
+    }
+    
+    public String toString() {
+        return "Box: " + this.stuff.size() + " things, total weight " + this.weight() + " kg";
+    }
+}

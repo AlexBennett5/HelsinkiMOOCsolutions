@@ -1,0 +1,53 @@
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
+
+public class Storehouse {
+    private Map<String, Integer> prodprice;
+    private Map<String, Integer> prodstock;
+    
+    public Storehouse() {
+        this.prodprice = new HashMap<String, Integer>();
+        this.prodstock = new HashMap<String, Integer>();
+    }
+    
+    public void addProduct(String product, int price, int stock) {
+        this.prodprice.put(product, price);
+        this.prodstock.put(product, stock);
+    }
+    
+    public int price(String product) {
+        if (!(this.prodprice.get(product) == null)) {
+            return this.prodprice.get(product);
+        }
+        
+        return -99;
+    }
+    
+    public int stock(String product) {
+        if (!(this.prodstock.get(product) == null)) {
+            return this.prodstock.get(product);
+        }
+        
+        return 0;
+    }
+    
+    public boolean take(String product) {
+        if (stock(product) > 0) {
+            this.prodstock.replace(product, this.prodstock.get(product) - 1);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public Set<String> products() {
+        Set<String> products = new HashSet<String>();
+        for (String keys : this.prodprice.keySet()) {
+            products.add(keys);
+        }
+        
+        return products;
+    }
+}

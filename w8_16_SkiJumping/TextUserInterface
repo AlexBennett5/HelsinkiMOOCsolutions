@@ -1,0 +1,92 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class TextUserInterface {
+    private Scanner reader;
+    private ArrayList<Jumper> jumpers;
+    private Judges judges;
+    
+    public TextUserInterface(Scanner reader) {
+        this.reader = reader;
+        this.jumpers = new ArrayList<Jumper>();
+        this.judges = new Judges();
+    }
+    
+    public void start() {
+        System.out.println("Kumpula ski jumping week");
+        System.out.println("Write the names of the participants one at a time; an empty string brings you to the jumping phase.");
+        String input = "a";
+        
+        while (!(input.equals(""))) {
+            System.out.print("  Participant name: ");
+            input = this.reader.nextLine();
+            if (!(input.equals(""))) {
+                Jumper newjump = new Jumper(input);
+                this.jumpers.add(newjump);
+            }
+                        
+        }
+        
+        System.out.println("The tournament begins!\n");
+        
+        int round = 1;
+        input = "jump";
+        
+        while (input.equals("jump")) {
+            
+            System.out.print("Write \"jump\" to jump; otherwise you quit: ");
+            input = this.reader.nextLine();
+            
+            if (!(input.equals("jump"))) {
+                break;
+            } else {
+                System.out.println("Round " + round +"\n");
+                Collections.sort(this.jumpers);
+            
+                System.out.println("Jumping order:");
+            
+                int count = 1;
+            
+                for (Jumper jumper : this.jumpers) {
+                    System.out.println("  " + count + ". " + jumper.toString());
+                    count++;
+                }
+            
+                System.out.println("\n" + "Results of round " + round);
+                
+                for (Jumper jumper : this.jumpers) {
+                    System.out.println("  " + jumper.getName());
+                    int jump = jumper.randomJump();
+                    System.out.println("    length: " + jump);
+                    jumper.addJump(jump);
+                
+                    ArrayList<Integer> votes = this.judges.randomVotes(jump);
+                    System.out.println("    judge votes: " + votes);
+                    jumper.addScore(this.judges.tabulateVotes(votes, jump));                
+                }
+            
+                round++;
+                }
+            
+            
+        }
+        
+        System.out.println("Thanks!\n");
+        System.out.println("Tournament results:");        
+        System.out.println("Position    Name");
+        
+        Collections.sort(this.jumpers);
+        Collections.reverse(this.jumpers);
+        int count = 1;
+        
+        for (Jumper jumper : this.jumpers) {
+            System.out.println(count + "           " + jumper.toString());
+            System.out.println("            jump lengths: " + jumper.printJumps());
+            count++;
+        }
+        
+    }
+      
+    
+}

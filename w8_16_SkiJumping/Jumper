@@ -1,0 +1,60 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Jumper implements Comparable<Jumper> {
+    private String name;
+    private int score;
+    private ArrayList<Integer> jumps;
+    private Random random;
+    
+    
+    public Jumper(String name) {
+        this.name = name;
+        this.score = 0;
+        this.jumps = new ArrayList<Integer>();
+        this.random = new Random();
+    }
+    
+    public void addScore(int score) {
+        this.score += score;
+    }
+    
+    public void addJump(int jump) {
+        this.jumps.add(jump);
+    }
+    
+    public String printJumps() {
+        String result = "";
+        for (int jumps : this.jumps) {
+            result += jumps + " m, ";
+        }
+        return result.substring(0, result.length()-2);
+    }
+    
+    public int getScore() {
+        return this.score;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    public ArrayList<Integer> getJumps() {
+        return this.jumps;
+    }
+    
+    public int randomJump() {
+        return this.random.nextInt(60) + 60;
+    }
+        
+    
+    @Override
+    public int compareTo(Jumper compared) {
+        return this.score - compared.getScore();
+    }
+    
+    @Override
+    public String toString() {
+        return this.name + " (" + this.score + " points)";
+    }
+}

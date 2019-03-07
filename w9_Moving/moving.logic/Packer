@@ -1,0 +1,30 @@
+import java.util.List;
+import moving.domain.Box;
+import moving.domain.Thing;
+import java.util.ArrayList;
+
+public class Packer {
+    private int boxVol;
+    private Box box;
+    
+    public Packer(int boxesVolume) {
+        this.boxVol = boxesVolume;
+        this.box = new Box(this.boxVol);
+
+    }
+    
+    public List<Box> packThings(List<Thing> things) {
+        List<Box> result = new ArrayList<Box>();
+        
+        for (Thing thing : things) {
+            if (!(this.box.addThing(thing))) {
+                result.add(this.box);
+                this.box = new Box(this.boxVol);
+                this.box.addThing(thing);
+            }             
+        }
+        result.add(this.box);
+        
+        return result;
+    }
+}

@@ -1,0 +1,65 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class AverageSensor implements Sensor {
+    private ArrayList<Sensor> sensors;
+    private ArrayList<Integer> readings;
+    
+    public AverageSensor() {
+        this.sensors = new ArrayList<Sensor>();
+        this.readings = new ArrayList<Integer>();
+    }
+    
+    public void addSensor(Sensor newsensor) {
+        this.sensors.add(newsensor);
+    }
+    
+    public void on() {
+        for (Sensor sensor : this.sensors) {
+            sensor.on();
+        }
+    }
+    
+    public void off() {
+        for (Sensor sensor : this.sensors) {
+            sensor.off();
+        }
+    }
+    
+    public boolean isOn() {
+        for (Sensor sensor : this.sensors) {
+            if (sensor.isOn() == false) {
+                return false;
+            }                               
+        }
+        
+        return true;
+    }
+    
+    public int measure() {
+        if (this.isOn() == false) {
+            throw new IllegalArgumentException("The sensor is off!");
+        }
+        
+        if (this.sensors.isEmpty()) {
+            throw new IllegalArgumentException("No sensors in the average sensor!");
+        }
+        int result = 0;
+        int count = 0;
+        
+        for (Sensor sensor : this.sensors) {
+            result += sensor.measure();
+            count++;
+        }
+        
+        this.readings.add(result/count);
+        
+        return result/count;
+    }
+    
+    public List<Integer> readings() {
+        return this.readings;
+    }
+    
+    
+}

@@ -1,0 +1,121 @@
+import logic.PhoneBook;
+import logic.Person;
+import java.util.*;
+
+public class TextUserInterface {
+    private Scanner reader;
+    private PhoneBook phonebook;
+    
+    public TextUserInterface(Scanner reader) {
+        this.reader = reader;
+        this.phonebook = new PhoneBook();
+    }
+    
+    public void start() {
+        
+        System.out.println("phone search\n" +
+                           "available operations:\n" +
+                           " 1 add a number\n" +
+                           " 2 search for a number\n" +
+                           " 3 search for a person by phone number\n" +
+                           " 4 add an address\n" +
+                           " 5 search for personal information\n" +
+                           " 6 delete personal information\n" +
+                           " 7 filtered listing\n" +
+                           " x quit");
+        
+        
+        
+        while (true) {
+            
+            System.out.print("\n" +
+                             "command: ");
+            String input = this.reader.nextLine();
+            
+            if (input.equals("1")) {
+                                
+                System.out.print("whose number: ");
+                String name = this.reader.nextLine();
+                System.out.print("number: ");
+                String number = this.reader.nextLine();
+                
+                this.phonebook.addPersonNum(name, number);
+                    
+                                                                
+            } else if (input.equals("2")) {
+                System.out.print("whose number: ");
+                String search = this.reader.nextLine();
+                               
+                if (this.phonebook.searchByName(search)) {
+                    System.out.println(this.phonebook.getPersonByName(search).getNumbers());
+                } else {
+                    System.out.println("not found");
+                }
+            
+            } else if (input.equals("3")) {
+                System.out.print("number: ");
+                String search = this.reader.nextLine();
+                
+                if (this.phonebook.searchByNum(search)) {
+                    System.out.print(this.phonebook.getPersonByNum(search).getName());
+                } else {
+                    System.out.print("not found");
+                }
+                
+            } else if (input.equals("4")) {
+                System.out.print("whose address: ");
+                String name = this.reader.nextLine();
+                System.out.print("street: ");
+                String add1 = this.reader.nextLine();
+                System.out.print("city: ");
+                String add2 = this.reader.nextLine();
+                String addr = add1 + " " + add2;
+                
+                this.phonebook.addPersonAddr(name, addr);
+                
+               
+            } else if (input.equals("5")) {
+                System.out.print("whose information: ");
+                String search = this.reader.nextLine();
+                
+                if (this.phonebook.searchByName(search)) {
+                    this.phonebook.getPersonByName(search).printPerson(0);                    
+                } else {
+                    System.out.println("not found");
+                }
+                
+            } else if (input.equals("6")) {
+                System.out.print("whose information: ");
+                String deleted = this.reader.nextLine();                                
+                this.phonebook.removePerson(deleted);                                          
+            
+            } else if (input.equals("7")) {
+                System.out.print("keyword (if empty all listed): ");
+                String search = this.reader.nextLine();
+                
+                ArrayList<Person> sorted = new ArrayList<Person>();
+                
+                for (Person person : this.phonebook.keywordSearch(search)) {
+                    sorted.add(person);                    
+                }
+                
+                Collections.sort(sorted);
+                
+                for (Person person : sorted) {
+                    person.printPerson(1);
+                }
+                
+                if (this.phonebook.keywordSearch(search).isEmpty()) {
+                    System.out.println("not found");
+                }
+                
+                
+            } else if (input.equals("x")) {
+                break;
+            }
+            
+        }
+    }
+    
+   
+}

@@ -1,0 +1,116 @@
+import logic.Person;
+import java.util.*;
+
+public class PhoneBook {
+    private List<Person> catalogue;
+    
+    public PhoneBook() {
+        this.catalogue = new ArrayList<Person>();
+    }
+    
+    public void addPersonNum(String name, String number) {
+        if (!(searchByName(name))) {
+            Person newperson = new Person(name);
+            newperson.addNumber(number);
+            this.catalogue.add(0, newperson); 
+        } else {
+            this.getPersonByName(name).addNumber(number);
+        }
+        
+    }
+    
+    public void addPersonAddr(String name, String addr) {
+        if (!(searchByName(name))) {
+            Person newperson = new Person(name);
+            newperson.addAddress(addr);
+            this.catalogue.add(newperson);
+        } else {
+            this.getPersonByName(name).addAddress(addr);
+        }
+        
+    }
+    
+    public void removePerson(String deleted) {
+        this.catalogue.remove(this.getPersonByName(deleted));
+                    
+    }
+    
+    
+    public boolean searchByName(String search) {
+                
+        for (Person person : this.catalogue) {
+            if (person.getName().equals(search)) {
+                return true;
+            }        
+        }
+            
+        return false;
+    }
+                
+    public boolean searchByNum(String search) {
+           
+        for (Person person : this.catalogue) {
+                    for (String num : person.getNumbers()) {
+                        if (num.equals(search)) {
+                            return true;
+                        }
+                    }
+                }
+                                
+        return false;
+    }
+    
+    public Person getPersonByName(String search) { 
+        
+        for (Person person : this.catalogue) {
+            if (person.getName().equals(search)) {
+                return person;
+            }                                        
+        }
+        return null;
+    }
+    
+    public Person getPersonByNum(String search) {
+        
+        for (Person person : this.catalogue) {
+            if (person.getNumbers().contains(search)) {
+                return person;
+            }                                      
+        }
+        
+        return null;        
+    }
+    
+    public Set<Person> keywordSearch(String key) {
+        HashSet<Person> result = new HashSet<Person>();
+        
+        if (key.equals("")) {
+            for (Person person : this.catalogue) {
+                result.add(person);
+            }
+            return result;
+        }
+        
+        for (Person person : this.catalogue) {
+            if (person.getName().contains(key)) {
+                result.add(person);
+            }
+            
+            if (person.getAddress().contains(key)) {
+                result.add(person);
+            }
+            
+            for (String num : person.getNumbers()) {
+                if (num.contains(key)) {
+                    result.add(person);
+                }            
+            }
+            
+        }
+        
+        return result;
+        
+    }
+    
+    
+}

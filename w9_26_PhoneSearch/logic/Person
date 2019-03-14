@@ -1,0 +1,79 @@
+import java.util.*;
+
+public class Person implements Comparable<Person> {
+    private String name;
+    private String address = "";
+    private Map<String, HashSet<String>> numbers;
+    
+    public Person(String name) {
+        this.name = name;
+        this.numbers = new HashMap<String, HashSet<String>>();
+        this.numbers.put(this.name, new HashSet<String>());
+    }
+    
+    public void addNumber(String number) {
+        this.numbers.get(this.name).add(number);
+    }
+    
+    public void addAddress(String address) {
+        this.address = address;
+    }
+    
+    public void printPerson(int header) {
+        
+        if (header == 1) {
+            System.out.println(this.name);
+        } else {
+            
+        }
+        
+        if (this.address.equals("")) {
+            System.out.println("  address unknown");
+        } else {
+            System.out.println("  address " + this.address);
+        }
+        
+        if (this.numbers.get(this.name).isEmpty()) {
+            System.out.println("  phone number not found");
+        } else {
+            System.out.println("phone numbers:");
+            for (String num : this.numbers.get(this.name)) {
+                System.out.println(num);
+            }
+        }
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    
+    
+    public String getAddress() {
+        return this.address;
+    }
+    
+    public Set<String> getNumbers() {
+        return this.numbers.get(this.name);
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Person)) {
+            return false;
+        }
+        
+        Person another = (Person) o;
+        
+        return this.name.equals(another.getName());
+    }
+    
+    @Override
+    public int hashCode() {        
+        return this.name.hashCode();
+    }
+   
+    @Override
+    public int compareTo(Person other) {
+        return this.name.compareToIgnoreCase(other.getName());
+    }
+}

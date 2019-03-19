@@ -1,0 +1,51 @@
+public class ProductContainerRecorder extends ProductContainer {
+    private ContainerHistory hist;
+    
+    public ProductContainerRecorder(String productName, double capacity, double initialVolume) {
+        super(productName, capacity);
+        this.hist = new ContainerHistory();
+        this.addToTheContainer(initialVolume);
+    }
+    
+    public void printAnalysis() {
+        System.out.println("Product: " + super.getName() + "\n" +
+                           "History: " + this.history() + "\n" +
+                           "Greatest product amount: " + this.hist.maxValue() + "\n" +
+                           "Smallest product amount: " + this.hist.minValue() + "\n" +
+                           "Average: " + this.hist.average() + "\n" +
+                           "Greatest change: " + this.hist.greatestFluctuation() + "\n" +
+                           "Variance: " + this.hist.variance());
+    }
+    
+    public String history() {
+        return this.hist.toString();
+    }
+    
+    //Adds ContainerHistory function to original method
+    @Override
+    public void addToTheContainer(double amount) {
+        super.addToTheContainer(amount);
+        this.hist.add(super.getVolume());
+    }
+    
+    //Adds ContainerHistory function to original method
+    @Override
+    public double takeFromTheContainer(double amount) {
+        double res = 0;
+        
+        if (amount < 0) {
+            return res;
+        } else if (amount > super.getVolume()) {
+            res = super.getVolume();
+            super.takeFromTheContainer(amount);
+            this.hist.add(super.getVolume());
+            return res;            
+        } else {
+            res = super.getVolume() - amount;
+            super.takeFromTheContainer(amount);
+            this.hist.add(super.getVolume());
+            return res;
+        }
+           
+    }
+}

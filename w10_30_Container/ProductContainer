@@ -1,0 +1,21 @@
+public class ProductContainer extends Container {
+    private String prodname;
+    
+    public ProductContainer(String productName, double capacity) {
+        super(capacity);
+        this.prodname = productName;
+    }
+    
+    public void setName(String newName) {
+        this.prodname = newName;
+    }
+    
+    public String getName() {
+        return this.prodname;
+    }
+    
+    @Override
+    public String toString() {
+        return this.getName() + ": " + super.toString();
+    }
+}

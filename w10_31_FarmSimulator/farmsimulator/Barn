@@ -1,0 +1,46 @@
+//Barn has BulkTank for collecting milk and MilkingRobot for milking cows
+public class Barn {
+    private BulkTank tank;
+    private MilkingRobot robot;
+    
+    public Barn(BulkTank tank) {
+        this.tank = tank;
+    }
+    
+    public void installMilkingRobot(MilkingRobot milkingRobot) {
+        this.robot = milkingRobot;
+        this.robot.setBulkTank(this.tank);
+    }
+    
+    //Milks cow and adds to bulk tank (must have MilkingRobot installed)
+    public void takeCareOf(Cow cow) {
+        
+        try {
+            double amount = cow.milk();
+            this.tank.addToTank(amount); 
+        } catch (Exception e) {
+            System.out.println("The milking robot isn't installed!");
+        }
+        
+    }
+    
+    //takeCareOf for collection of cows (must have MilkingRobot installed)
+    public void takeCareOf(Collection<Cow> herd) {
+        
+        try {
+            for (Cow cow : herd) {
+                takeCareOf(cow);
+            }
+        } catch (Exception e) {
+            System.out.println("The milking robot isn't installed!");
+        }
+    }
+    
+    public BulkTank getBulkTank() {
+        return this.tank;
+    }
+    
+    public String toString() {
+        return this.tank.toString();
+    }
+}

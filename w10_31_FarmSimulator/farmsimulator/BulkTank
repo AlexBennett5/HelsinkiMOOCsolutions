@@ -1,0 +1,55 @@
+import java.lang.Math;
+
+// Capacity and volume measured in liters
+public class BulkTank {
+    private double capLt;
+    private double volLt;
+    
+    
+    public BulkTank() {
+        this.capLt = 2000;
+        this.volLt = 0;
+    }
+    
+    public BulkTank(double capacity) {
+        this.capLt = capacity;
+        this.volLt = 0;
+    }
+    
+    //Adds amount to tank. If exceeds capLt, fills to capLt only
+    public void addToTank(double amount) {
+        if (this.volLt + amount < this.capLt) {
+            this.volLt += amount;
+        } else {
+            this.volLt = this.capLt;
+        }
+    }
+    
+    //Returns amount removed from tank. If removes more than volLt, changes volLt to 0
+    public double getFromTank(double amount) {
+        if (this.volLt - amount > 0) {
+            this.volLt -= amount;
+            return amount;
+        } else {
+            double result = this.volLt;
+            this.volLt = 0;
+            return result;
+        }        
+    }
+    
+    public double getCapacity() {
+        return this.capLt;
+    }
+    
+    public double getVolume() {
+        return this.volLt;
+    }
+    
+    public double howMuchFreeSpace() {
+        return this.capLt - this.volLt;
+    }
+    
+    public String toString() {
+        return Math.ceil(this.volLt) + "/" + Math.ceil(this.capLt);
+    }
+}

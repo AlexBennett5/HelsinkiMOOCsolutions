@@ -1,0 +1,56 @@
+import java.util.Collection;
+import java.util.ArrayList;
+
+public class Farm implements Alive {
+    private String owner;
+    private Barn barn;
+    private Collection<Cow> herd;
+    
+    public Farm(String owner, Barn barn) {
+        this.owner = owner;
+        this.barn = barn;
+        this.herd = new ArrayList<Cow>();
+    }
+    
+    public void addCow(Cow cow) {
+        this.herd.add(cow);
+    }
+    
+    public void installMilkingRobot(MilkingRobot robot) {
+        this.barn.installMilkingRobot(robot);
+    }
+    
+    //liveHour all cows in herd
+    public void liveHour() {
+        for (Cow cow : this.herd) {
+            cow.liveHour();
+        }
+    }
+    
+    //takeCareOf all cows in herd
+    public void manageCows() {
+        this.barn.takeCareOf(this.herd);
+    }
+    
+    public String getOwner() {
+        return this.owner;
+    }
+    
+    //Gets owner name, bulktank.toString(), and cow.toString() for all cows in herd
+    public String toString() {
+        String result = "Farm owner: " + this.owner + "\n" +
+                        "Barn bulk tank: " + this.barn.getBulkTank().toString() + "\n";
+        
+        if (this.herd.isEmpty()) {
+            result += "No cows.";
+        } else {
+            result += "Animals:\n";
+            for (Cow cow : this.herd) {
+                result += "        " + cow.toString() + "\n";
+            }
+        }
+        
+        return result;
+        
+    }
+}

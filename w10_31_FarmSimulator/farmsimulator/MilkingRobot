@@ -1,0 +1,23 @@
+//Must have BulkTank object set to milk
+public class MilkingRobot {
+    private BulkTank tank;
+    
+    public MilkingRobot() {        
+    }
+    
+    public void setBulkTank(BulkTank tank) {
+        this.tank = tank;
+    }
+    
+    public void milk(Milkable milkable) {
+        try {
+            this.tank.addToTank(milkable.milk());
+        } catch (Exception e) {
+            System.out.println("No bulk tank installed!");
+        }
+    }
+    
+    public BulkTank getBulkTank() {
+        return this.tank;
+    }
+}

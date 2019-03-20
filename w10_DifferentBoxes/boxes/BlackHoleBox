@@ -1,0 +1,17 @@
+import java.util.Collection;
+
+//Add anything to BlackHoleBox, but cannot verify if thing is contained in box
+public class BlackHoleBox extends Box {
+    
+    public void add(Thing thing) {
+        
+    }
+    
+    public void add(Collection<Thing> things) {
+        
+    }
+    
+    public boolean isInTheBox(Thing thing) {
+        return false;
+    }
+}

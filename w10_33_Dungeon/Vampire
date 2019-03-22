@@ -1,0 +1,13 @@
+//Vampires move randomly and cannot collide with eachother
+public class Vampire extends Character {
+    private int xCoord;
+    private int yCoord;
+    
+    public String getSymbol() {
+        return "v";
+    }
+    
+    public String toString() {
+        return this.getSymbol() + " " + super.toString();
+    }
+}

@@ -1,0 +1,64 @@
+import java.util.List;
+import java.util.ArrayList;
+
+//Map that displays current state of game. No data about characters is stored in Board
+public class Board {
+    private List<List<String>> board;    
+
+    public Board(int length, int height) {
+        this.board = generateEmptyBoard(length, height);
+    }
+    
+    public int getLength() {
+        return this.board.size();
+    }
+    
+    public int getHeight() {
+        return this.board.get(0).size();
+    } 
+    
+    //Generates empty board
+    public List<List<String>> generateEmptyBoard(int length, int height) {
+        List<List<String>> board = new ArrayList<List<String>>();
+        
+        for (int i = 0; i < length; i++) {
+            board.add(new ArrayList<String>());
+            
+            for (int j = 0; j < height; j++) {
+                board.get(i).add(".");
+            }
+        }
+        
+        return board;
+    }
+    
+    //Prints current board
+    public void printBoard() {
+
+        for (int j = 0; j < this.getHeight(); j++) {
+            
+            for (int i = 0; i < this.getLength(); i++) {
+                System.out.print(this.board.get(i).get(j));
+            }
+            
+            System.out.println();
+        }
+    }
+    
+    //Clears board, then adds protag and vampire positions from MotionLogic object
+    public void updateBoard(List<Vampire> vampires, Protag protag) {
+        this.board = generateEmptyBoard(this.getLength(), this.getHeight());
+        
+        for (Vampire vamp : vampires) {
+            int i = vamp.getXCoord();
+            int j = vamp.getYCoord();
+            
+            this.board.get(i).set(j, vamp.getSymbol());
+        }
+        
+        int i = protag.getXCoord();
+        int j = protag.getYCoord();
+        
+        this.board.get(i).set(j, protag.getSymbol());
+    }
+}

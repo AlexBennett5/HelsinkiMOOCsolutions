@@ -1,0 +1,55 @@
+public abstract class Character {
+    private int xCoord;
+    private int yCoord;
+    
+    public Character() {
+    }
+    
+    public void setX(int n) {
+        this.xCoord = n;
+    }
+    
+    public void setY(int n) {
+        this.yCoord = n;
+    }
+    
+    public int getXCoord() {
+        return this.xCoord;
+    }
+    
+    public int getYCoord() {
+        return this.yCoord;
+    }
+    
+    public int getFutX(int x) {
+        return this.xCoord + x;
+    }
+    
+    public int getFutY(int y) {
+        return this.yCoord + y;
+    }
+        
+    public String toString() {
+        return this.xCoord + " " + this.yCoord;
+    }
+    
+    public abstract String getSymbol();
+    
+    //Two characters are equal if they occupy the same spot
+    @Override
+    public boolean equals(Object o) {
+        Character compare = (Character) o;
+        
+        if (this.getXCoord() == compare.getXCoord() && this.getYCoord() == compare.getYCoord()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    @Override
+    public int hashCode() {
+        return this.xCoord + this.yCoord;
+    }
+}

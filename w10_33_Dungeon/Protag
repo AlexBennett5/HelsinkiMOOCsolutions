@@ -1,0 +1,19 @@
+//Protag starts at (0,0) and can collide with vampires. Controlled by player
+public class Protag extends Character {
+    private int xCoord;
+    private int yCoord;
+    
+    public Protag() {
+        this.xCoord = 0;
+        this.yCoord = 0;
+    }
+    
+    public String getSymbol() {
+        return "@";
+    }
+    
+    public String toString() {
+        return this.getSymbol() + " " + super.toString();
+    }
+    
+}

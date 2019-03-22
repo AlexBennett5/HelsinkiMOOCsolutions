@@ -1,0 +1,148 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
+
+/* Controls motion logic of game. Creates protag and new vampires,
+*  changes players' positions, and detects collisions.
+*/
+public class MotionLogic {
+    private List<Vampire> vampires;
+    private Protag protag;
+    private int xBound;
+    private int yBound;
+    private boolean vMove;
+    
+    public MotionLogic(int length, int height, int noOfVamps, boolean vMove) {
+        this.protag = new Protag();
+        this.vampires = new ArrayList<Vampire>();
+        this.xBound = length;
+        this.yBound = height;
+        this.vMove = vMove;
+        
+        for (int i = 0; i < noOfVamps; i++) {
+            createVamp();
+        }
+    }
+    
+    //Creates vampire and gives random (x,y) value other than (0,0)
+    public void createVamp() {
+        Vampire vamp = new Vampire();
+        int randomX = new Random().nextInt(this.xBound - 1) + 1;
+        int randomY = new Random().nextInt(this.yBound - 1) + 1;
+        
+        vamp.setX(randomX);
+        vamp.setY(randomY);
+        
+        this.vampires.add(vamp);
+    }
+    
+    //Removes vampire if protag and vampire position are the same
+    public void anyDeaths() {
+        ArrayList<Vampire> toBeRemoved = new ArrayList<Vampire>();
+          
+        for (Vampire vamp : this.vampires) {
+            if (this.protag.equals(vamp)) {
+                toBeRemoved.add(vamp);
+            }
+        }
+        
+        this.vampires.removeAll(toBeRemoved);
+    }
+    
+    //Protag moves, checked for in-bounds
+    public void protagMove(int x, int y) {
+        int testX = this.protag.getFutX(x);
+        int testY = this.protag.getFutY(y);
+        
+        if (moveChecker(testX, testY)) {
+            this.protag.setX(testX);
+            this.protag.setY(testY);
+        } else {
+            cornerCase(this.protag, testX, testY);
+        }
+    }
+    
+    //Vampire makes one move, checked for collision and in-bounds
+    public void vampMove(Vampire vamp) {
+        int dir = new Random().nextInt(2) * 2 - 1;
+        int randX = new Random().nextInt(2) * dir;
+        int randY = new Random().nextInt(2) * dir;
+        
+        int testX = vamp.getFutX(randX);
+        int testY = vamp.getFutY(randY);
+        
+        if (moveChecker(testX, testY) && !(collisionCheck(vamp))) {
+            vamp.setX(testX);
+            vamp.setY(testY);
+        } else if (!(moveChecker(testX, testY)) && !(collisionCheck(vamp))) {
+            cornerCase(vamp, testX, testY);
+        } else {
+            vampMove(vamp);
+        }
+        
+    }
+    
+    public boolean collisionCheck(Vampire vamp) {
+        for (Vampire vm : this.vampires) {
+            if (vamp.equals(vm)) {
+                return false;
+            } 
+        }
+        
+        return false;
+    }
+    
+    //Returns true if (x,y) coordinates are in-bounds
+    public boolean moveChecker(int x, int y) {
+        if (x < 0 || x > this.xBound - 1) {
+            return false;
+        } else if (y < 0 || y > this.yBound - 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    //Generates acceptable movements if invalid movement is entered
+    public void cornerCase(Character charac, int x, int y) {
+        
+        if (x < 0) {
+            charac.setX(0);
+        }
+        
+        if (x > this.xBound) {
+            charac.setX(this.xBound - 1);
+        }
+        
+        if (y < 0) {
+            charac.setY(0);
+        }
+        
+        if (y > this.yBound) {
+            charac.setY(this.yBound - 1);
+        }
+    }
+    
+    public void oneTurn(int x, int y) {
+        protagMove(x, y);
+        
+        anyDeaths();
+        
+        if (this.vMove) {
+            for (Vampire vamp : this.vampires) {
+                vampMove(vamp);
+            }
+        }
+        
+    }
+    
+    //Getter methods for importing data into Board
+    public List<Vampire> getVamps() {
+        return this.vampires;
+    }
+    
+    public Protag getProtag() {
+        return this.protag;
+    }
+    
+}
